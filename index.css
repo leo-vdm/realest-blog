@@ -1,0 +1,105 @@
+*
+{
+    padding: 0px;
+    margin: 0px;
+    
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif, Arial, Helvetica, sans-serif;
+}
+
+body
+{
+    overflow:hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+#content_root
+{
+    background-image: url('bg.jpg');
+    background-size: cover;
+    padding: 0px 100px 0px 100px;
+    width: calc(100vw - 200px);
+    height: 100vh;
+}
+
+/* Semi blurred transparent look akin to Win7 */
+#content_area_border
+{
+    width: calc(100% - 60px);
+    padding: 60px 30px 0px 30px;
+    
+    position: relative;
+    top: 70px;
+    height: calc(100% - 130px);
+    
+    background-color: #a7e1f84f;
+    border-radius: 10px 10px 0px 0px;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    
+    border: 1px solid white;
+    box-shadow: 0px 0px 20px black;
+}
+
+#window_titlebar
+{
+    position: absolute;
+    top: 0.5em;
+    width: 100em;
+    height: 2em;
+    
+    display: inline-block;
+    background: transparent;
+}
+
+#content_area_outer
+{
+    background-color: transparent;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    border: 1px solid #ffffff8a;
+    border-radius: 3px;
+}
+
+#content_area_inner
+{
+    background-color: white;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    
+    border: 1px solid #4c4c4c;
+    border-radius: 3px;
+}
+
+#window_icon
+{
+    display: inline-block;
+    width: 2rem;
+    height: auto:
+}
+
+#window_title
+{
+    display: inline-block;
+    background: transparent;
+    width: fit-content;
+    position: absolute;
+    top: 2px;
+    margin-left: 3px;
+    /* The black shadow adds a kind of blur to the text which makes it look more authentic. The white adds contrast.
+    */
+    text-shadow: 0px 0px 1px black, 0px 0px 20px white, 0px 0px 15px white;
+    font-size: 20px;
+}
+
+#top_bar
+{
+    width: 100%;
+    height: 3rem;
+
+    background: #f2fcff;
+    background: linear-gradient(180deg,rgba(242, 252, 255, 1) 46%, rgba(220, 234, 242, 1) 65%);
+    box-shadow: 0px 0px 4px black;
+}
