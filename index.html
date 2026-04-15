@@ -20,10 +20,27 @@
         <div id="content_area_outer">
             <div id="content_area_inner">
                 <div id="top_bar">
+                    <button class="top_bar_button" onclick="on_home_clicked()">
+                    Home
+                    </button>
+                </div>
+                <div id="content_target">
                 </div>
             </div>
         </div>
     </div>
-</div>    
+</div>
+
+<template id="article_row_template">
+    <div id="article_row_container">
+        <img id="article_row_image" onerror="this.src='missing.png'"/>
+        <div id="article_row_right">
+            <div id="article_row_title"></div>
+            <div id="article_row_description"></div>
+        </div>
+    </div>
+</template>
+
+<script src="index.js"></script>
 </body>
 </html>
