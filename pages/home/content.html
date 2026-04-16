@@ -22,6 +22,19 @@
     .caption
     {
         text-shadow: 0px 0px 1px black;
+        padding-left: 5px;
+    }
+    
+    .rant_tag
+    {
+        background: #ffbfbf;
+        background: linear-gradient(180deg,rgba(255, 191, 191, 1) 45%, rgba(255, 110, 110, 1) 65%);
+        padding-left: 5px;
+        padding-right: 5px;
+        border-radius: 3px;
+        color: black;
+        border: 1px solid red;
+        text-shadow: 0px 0px 20px white, 0px 0px 15px white;
     }
     
     p
@@ -40,10 +53,10 @@ Here you will find some information about myself and a blog where I write about 
 <p>
 Im a 3rd year student studying Software Engineering at the University of Waikato. I mostly work on deskotp native projects in C++ but sometimes I also work on
 web-based projects like this site (usually the projects are more modern looking though). You can find my github (where this site is hosted) <a href="https://github.com/leo-vdm" target="_blank">here</a>
-or get in touch via email <span class="copyable_text" onclick="on_copyable_text_clicked(this)">LeovdMerwe@protonmail.com</span>.
+or get in touch via email <span class="copyable_text" title="Click to copy." onclick="on_copyable_text_clicked(this, event)">LeovdMerwe@protonmail.com</span>.
 </p>
 <br>
-<h2 class="heading">Aesthetic <span style="color:red;">(Rant)</span></h2>
+<h2 class="heading">Aesthetic <span class="rant_tag">Rant</span></h2>
 <p>
 The aesthetic for this site is taken from Windows 7 (the last good Windows edition). More generally this style is called "Frutiger Aero", a descendant of the
 Y2K design aesthetic. Fruitiger Aero is characterised by these kinds of "glossy" design elements and lots of transparency, bright color and rounded edges.

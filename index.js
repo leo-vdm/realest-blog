@@ -14,9 +14,7 @@ file names).
 const CONTENT_INDEX = {
     "Content" :
     [
-        { name : "500,000,000x Faster with C++", url: "clickbait_cpp"},
-        { name: "How I made a $2m startup", url: "onlyfans"},
-        { name: "How I made a $2m startup", url: "article_1"},
+        { name : "Coming Soon!", url: "ui_journey_1"},
     ]
 };
 
@@ -38,7 +36,9 @@ var window_title = null;
 var window_dragbar = null;
 var hidden_drag_ghost = null;
 var window_icon = null;
+
 var article_row_template = null;
+var text_copied_template = null;
 
 var dynamic_script = null;
 
@@ -219,15 +219,34 @@ function on_home_clicked()
     HomePage();
 }
 
-async function on_copyable_text_clicked(source)
+// Create a new temporary popup by cloning the template
+function new_copied_text_popup(pos_x, pos_y)
 {
-    if(source == null)
+    const created = document.importNode(text_copied_template.content, true);
+    
+    // Setting the position
+    const container_el = created.getElementById("text_copied_container");
+    container_el.style.setProperty('left', pos_x+'px');
+    container_el.style.setProperty('top', pos_y+'px');
+    
+    // Setting the auto-kill timer
+    setTimeout(() => {container_el.remove();}, 1000);
+    
+    // Parenting to the root element
+    const body = document.querySelector('body');
+    body.appendChild(created);
+}
+
+async function on_copyable_text_clicked(source, event)
+{
+    if(source == null || event == null)
     {
         return;
     }
 
     try {
         await navigator.clipboard.writeText(source.textContent);
+        new_copied_text_popup(event.screenX, event.screenY);
     }
     catch(err) {
         console.error('Failed to copy text to clipboard: ' + source.textContent);
@@ -291,6 +310,7 @@ function main()
     window_icon = document.getElementById('window_icon');
     
     article_row_template = document.getElementById('article_row_template');
+    text_copied_template = document.getElementById('text_copied_template');
     
     dynamic_script = document.getElementById('dynamic_script');
     

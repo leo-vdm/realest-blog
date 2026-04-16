@@ -164,19 +164,25 @@ body
     font-size: 40px;
 }
 
-.horizontal_spacer
+#text_copied_container
 {
-    width: auto;
-    height: 100%;
-    display: inline-block;
+    position: absolute;
+    background: #d6d6d6;
+    background: linear-gradient(180deg,rgba(214, 214, 214, 1) 44%, rgba(166, 166, 166, 1) 57%);
+    border: 1px solid gray;
+    box-shadow: 0px 0px 4px black;
+    
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .copyable_text
 {
-    box-shadow: 0px 0px 4px black;
+    box-shadow: 0px 0px 2px black;
     padding-left: 2px;
     padding-right: 3px;
     border-radius: 3px;
+    cursor: pointer;
     
     background: #f2fcff;
     background: linear-gradient(180deg,rgba(242, 252, 255, 1) 46%, rgba(220, 234, 242, 1) 65%);
@@ -186,4 +192,5 @@ body
 {
     background: #fff8e0;
     background: linear-gradient(180deg,rgba(255, 248, 224, 1) 45%, rgba(255, 234, 97, 1) 65%);
+    cursor: pointer;
 }
