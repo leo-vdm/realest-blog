@@ -147,3 +147,10 @@ body
 {
     font-size: 40px;
 }
+
+.horizontal_spacer
+{
+    width: auto;
+    height: 100%;
+    display: inline-block;
+}

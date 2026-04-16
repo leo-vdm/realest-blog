@@ -27,6 +27,8 @@ var window_title = null;
 var window_icon = null;
 var article_row_template = null;
 
+var dynamic_script = null;
+
 function load_content_snippet(url, target)
 {
   fetch(url)
@@ -47,6 +49,18 @@ function load_content_snippet(url, target)
     });
 }
 
+function run_dynamic_script(url, target)
+{
+    target.src = url;
+    
+    if(script_main == null)
+    {
+        return;
+    }
+    
+    script_main();
+}
+
 async function load_article_description(url, target)
 {
     fetch(url)
@@ -63,7 +77,7 @@ async function load_article_description(url, target)
       target.innerText = txt;
     })
     .catch(error => {
-      console.error('Error loading HTML:', error);
+      console.error('Error loading article description:', error);
     });
 }
 
@@ -80,14 +94,14 @@ function get_article_name_from_url(path)
         }
     }
     
-    return "not_found_lol"
+    return "not_found_lol";
 }
 
 function Article(path, name)
 {
     // Switch the window title and icon. We use the notepad icon for articles.
     window_icon.src = "notepad.ico"
-    window_title.innerText = `C:\\Home\\${name}.txt - Notepad`
+    window_title.innerText = `C:\\Blog\\${name}.txt - Notepad`
 
     // Load our content snippet
     load_content_snippet("articles/" + path + "/content.html", content_target);
@@ -116,11 +130,11 @@ function new_article_row(path, name)
     return created;
 }
 
-function HomePage()
+function BlogPage()
 {
     // Switch the window title and icon. We use the file explorer icon for the home page.
     window_icon.src = "explorer.ico"
-    window_title.innerText = "C:\\Home - File Explorer"
+    window_title.innerText = "C:\\Blog - File Explorer"
  
     content_target.innerHTML = "";
     
@@ -134,11 +148,32 @@ function HomePage()
     }
 }
 
+function HomePage()
+{
+    // Switch the window title and icon. We use the file explorer icon for the home page.
+    window_icon.src = "explorer.ico"
+    window_title.innerText = "C:\\Home - File Explorer"
+ 
+    content_target.innerHTML = "";
+
+    // Load our content snippet
+    load_content_snippet("pages/home/content.html", content_target);
+    run_dynamic_script("pages/home/script.js", dynamic_script);
+}
+
 // Add the article path to the current URL without reloading
 function SetArticleUrl(path)
 {
     const new_url = new URL(window.location.href);
     new_url.searchParams.set('a', path);
+    window.history.pushState({}, '', new_url.href);   
+}
+
+// Add the page id to the current URL without reloading
+function SetPageUrl(path)
+{
+    const new_url = new URL(window.location.href);
+    new_url.searchParams.set('p', path);
     window.history.pushState({}, '', new_url.href);   
 }
 
@@ -151,13 +186,24 @@ function on_article_clicked(path)
     Article(path, get_article_name_from_url(path));
 }
 
-function on_home_clicked()
+function on_blog_clicked()
 {
-    // Set current article to blank so the user lands on the home page if they reload
+    // Set current article to blank and the page to blog so the user lands on the blog page if they reload
     SetArticleUrl("");
+    SetPageUrl("blog");
     
     // Switch the page content to the home page
-    HomePage()
+    BlogPage();
+}
+
+function on_home_clicked()
+{
+    // Set current article to blank and the page to blank so the user lands on the home page if they reload
+    SetArticleUrl("");
+    SetPageUrl("");
+    
+    // Switch the page content to the home page
+    HomePage();
 }
 
 function main()
@@ -170,6 +216,8 @@ function main()
     
     article_row_template = document.getElementById('article_row_template');
     
+    dynamic_script = document.getElementById('dynamic_script');
+    
     // Check if the user was on an article already
     const params = new URLSearchParams(window.location.search);
     const article_path = params.get('a');
@@ -181,7 +229,15 @@ function main()
         return;
     }
     
-    // We are on the home page
+    // We werent on an articles so check which page we were on
+    const page_id = params.get('p');
+    if(page_id != null && page_id != "")
+    {
+        // We are on the home page
+        BlogPage();
+        return;
+    }
+    
     HomePage();
 };
 
