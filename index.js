@@ -20,10 +20,23 @@ const CONTENT_INDEX = {
     ]
 };
 
+var window_bounds = {
+    dim : { x : 0, y : 0},
+    pos : { x: 0, y : 0},
+};
+
+var window_drag = {
+    last_x : 0,
+    last_y : 0
+};
+
+var content_area_border = null;
 var top_bar = null;
 var content_target = null;
 
 var window_title = null;
+var window_dragbar = null;
+var hidden_drag_ghost = null;
 var window_icon = null;
 var article_row_template = null;
 
@@ -206,12 +219,75 @@ function on_home_clicked()
     HomePage();
 }
 
+async function on_copyable_text_clicked(source)
+{
+    if(source == null)
+    {
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(source.textContent);
+    }
+    catch(err) {
+        console.error('Failed to copy text to clipboard: ' + source.textContent);
+    }
+}
+
+async function on_window_dragged(event)
+{
+    let delta_x = event.pageX - window_drag.last_x;
+    let delta_y = event.pageY - window_drag.last_y;
+    
+    let abs_movement = Math.abs(delta_x) + Math.abs(delta_y);
+    
+    // If there was no movement or the movement is suspicously larger then just skip
+    if(abs_movement == 0 || abs_movement > 30)
+    {
+        return;
+    }
+    
+    // Update the window pos
+    window_bounds.pos.x += delta_x;
+    window_bounds.pos.y += delta_y;
+    
+    // Set the position of the window
+    content_area_border.style.setProperty('left', window_bounds.pos.x+'px');
+    content_area_border.style.setProperty('top', window_bounds.pos.y+'px');
+
+    window_drag.last_x = event.pageX;
+    window_drag.last_y = event.pageY;
+}
+
+function on_window_drag_start(event)
+{
+    event.dataTransfer.setDragImage(hidden_drag_ghost, 0, 0);
+
+    window_drag.last_x = event.pageX;
+    window_drag.last_y = event.pageY;
+}
+
 function main()
 {
+    content_area_border = document.getElementById('content_area_border');
+    
+    window_bounds.dim.x = content_area_border.offsetWidth; 
+    window_bounds.dim.y = content_area_border.offsetHeight;
+    
+    // Note(Leo): We assume the window starts out at these coords because they are what we set in the style.
+    //            if the ones in the style change these have to as well to avoid an initial snapping.
+    window_bounds.pos.x = 70; 
+    window_bounds.pos.y = 70;    
+    
     top_bar = document.getElementById('top_bar');
     content_target = document.getElementById('content_target');
     
     window_title = document.getElementById('window_title');
+    hidden_drag_ghost = document.getElementById('hidden_drag_ghost');
+    window_dragbar = document.getElementById('window_dragbar');
+    // Attatch extra dragging related listeners
+    window_dragbar.addEventListener('dragstart', on_window_drag_start)
+    
     window_icon = document.getElementById('window_icon');
     
     article_row_template = document.getElementById('article_row_template');

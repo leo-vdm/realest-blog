@@ -17,6 +17,7 @@
                 C:\Home - File Explorer
             </div>
         </div>
+        <div id="window_dragbar" draggable="true" ondrag="on_window_dragged(event)"></div>
         <div id="content_area_outer">
             <div id="content_area_inner">
                 <div id="top_bar">
@@ -43,6 +44,8 @@
         </div>
     </div>
 </template>
+
+<div id="hidden_drag_ghost"></div>
 
 <script src="index.js"></script>
 <script id="dynamic_script"></script>

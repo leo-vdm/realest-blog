@@ -1,7 +1,12 @@
 <style>
     .heading
     {
-        text-decoration: underline;
+        background: #f2fcff;
+        background: linear-gradient(180deg,rgba(242, 252, 255, 1) 46%, rgba(220, 234, 242, 1) 65%);
+        box-shadow: 0px 0px 1px black;
+        padding-left: 5px;
+        color: rgb(31, 5, 125);
+        font-weight: 400;
     }
     
     #new_word_image
@@ -18,19 +23,27 @@
     {
         text-shadow: 0px 0px 1px black;
     }
+    
+    p
+    {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 </style>
 
+<div class="content_enclosure">
 <h1 class="heading">Welcome to my site!</h1>
 <p>
-I have some information about myself and a blog where I write about projects I'm working on and interesting programming subjects. 
+Here you will find some information about myself and a blog where I write about projects I'm working on and interesting programming subjects. 
 </p>
 <h2 class="heading">About</h2>
 <p>
 Im a 3rd year student studying Software Engineering at the University of Waikato. I mostly work on deskotp native projects in C++ but sometimes I also work on
-web-based projects like this site (usually the projects are more modern looking though).
+web-based projects like this site (usually the projects are more modern looking though). You can find my github (where this site is hosted) <a href="https://github.com/leo-vdm" target="_blank">here</a>
+or get in touch via email <span class="copyable_text" onclick="on_copyable_text_clicked(this)">LeovdMerwe@protonmail.com</span>.
 </p>
 <br>
-<h2 class="heading">Aesthetic</h2>
+<h2 class="heading">Aesthetic <span style="color:red;">(Rant)</span></h2>
 <p>
 The aesthetic for this site is taken from Windows 7 (the last good Windows edition). More generally this style is called "Frutiger Aero", a descendant of the
 Y2K design aesthetic. Fruitiger Aero is characterised by these kinds of "glossy" design elements and lots of transparency, bright color and rounded edges.
@@ -54,3 +67,4 @@ be an independant illustration. This can probably be explained as designers maki
 to break away from paletised colors into full 8-bit RGBA, but I also just think it looks better.
 </p>
 <div id="bottom_padding"></div>
+</div>
