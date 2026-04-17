@@ -1,0 +1,29 @@
+:root {
+    --content-root-bg: url('bg.jpg'), url('bg_low.jpg');
+
+    --content-border-bg: #a7e1f84f;
+    
+    --content-inner-bg: white;
+    
+    --top-bar-button-hover-highlight: rgb(60, 117, 181);
+    
+    --over-gradient-text-color: rgb(31, 5, 125);
+    --common-fallback-bg: #f2fcff;
+    --common-gradient-bg: linear-gradient(180deg,rgba(242, 252, 255, 1) 46%, rgba(220, 234, 242, 1) 65%);
+    --common-text-color: black;
+    
+    --checkbox-bg: #d6d6d6;
+    --checkbox-gradient-bg: radial-gradient(circle,rgba(214, 214, 214, 1) 20%, rgba(166, 166, 166, 1) 42%);
+    
+    /* Note(Leo): Cursed way of layering the SVG ontop of the gradient.*/
+    --checkbox-checked-gradient-image-bg: url('checkmark.svg'), radial-gradient(circle,rgba(251, 255, 222, 1) 19%, rgba(255, 230, 107, 1) 42%);
+    
+    --text-copied-bg: #d6d6d6;
+    --text-copied-gradient-bg: linear-gradient(180deg,rgba(214, 214, 214, 1) 44%, rgba(166, 166, 166, 1) 57%);
+    
+    --copyable-text-bg: #fff8e0;
+    --copyable-text-gradient-bg: linear-gradient(180deg,rgba(255, 248, 224, 1) 45%, rgba(255, 234, 97, 1) 65%);
+    
+    --rant-tag-fallback-bg: #ffbfbf;
+    --rant-tag-gradient-bg: linear-gradient(180deg,rgba(255, 191, 191, 1) 45%, rgba(255, 110, 110, 1) 65%);
+}

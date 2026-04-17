@@ -1,11 +1,11 @@
 <style>
     .heading
     {
-        background: #f2fcff;
-        background: linear-gradient(180deg,rgba(242, 252, 255, 1) 46%, rgba(220, 234, 242, 1) 65%);
+        background:var(--common-fallback-bg);
+        background: var(--common-gradient-bg);
         box-shadow: 0px 0px 1px black;
         padding-left: 5px;
-        color: rgb(31, 5, 125);
+        color: var(--over-gradient-text-color);
         font-weight: 400;
     }
     
@@ -32,13 +32,13 @@
     
     .rant_tag
     {
-        background: #ffbfbf;
-        background: linear-gradient(180deg,rgba(255, 191, 191, 1) 45%, rgba(255, 110, 110, 1) 65%);
+        background: var(--rant-tag-fallback-bg);
+        background: var(--rant-tag-gradient-bg);
         padding-left: 5px;
         padding-right: 5px;
         border-radius: 3px;
-        color: black;
-        border: 1px solid red;
+        color: var(--common-text-color);
+        border: 1px solid var(--rant-tag-fallback-bg);
         text-shadow: 0px 0px 20px white, 0px 0px 15px white;
     }
     
@@ -50,8 +50,8 @@
     
     figcaption
     {
-        background: #f2fcff;
-        background: linear-gradient(180deg,rgba(242, 252, 255, 1) 46%, rgba(220, 234, 242, 1) 65%);
+        background:var(--common-fallback-bg);
+        background: var(--common-gradient-bg);
         width: fit-content;
     }
 </style>

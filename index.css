@@ -2,6 +2,7 @@
 {
     padding: 0px;
     margin: 0px;
+    color: var(--common-text-color);
     
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif, Arial, Helvetica, sans-serif;
 }
@@ -15,7 +16,7 @@ body
 
 #content_root
 {
-    background-image: url('bg.jpg'), url('bg_low.jpg');
+    background-image: var(--content-root-bg);
     background-size: cover, cover;
     width: 100vw;
     height: 100vh;
@@ -53,7 +54,7 @@ body
 /* Semi blurred transparent look akin to Win7 */
 #content_area_border
 {
-    background-color: #a7e1f84f;
+    background-color: var(--content-border-bg);
     border-radius: 10px 10px 0px 0px;
     backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
@@ -99,7 +100,7 @@ body
 
 #content_area_inner
 {
-    background-color: white;
+    background-color: var(--content-inner-bg);
     width: calc(100% - 2px);
     height: calc(100% - 2px);
     overflow-x: hidden;
@@ -128,6 +129,7 @@ body
     */
     text-shadow: 0px 0px 1px black, 0px 0px 20px white, 0px 0px 15px white;
     font-size: 20px;
+    color: var(--common-text-color);
 }
 
 #top_bar
@@ -136,8 +138,8 @@ body
     height: 3rem;
     position:relative;
 
-    background: #f2fcff;
-    background: linear-gradient(180deg,rgba(242, 252, 255, 1) 46%, rgba(220, 234, 242, 1) 65%);
+    background: var(--common-fallback-bg);
+    background: var(--common-gradient-bg);
     box-shadow: 0px 0px 4px black;
     
     display: flex;
@@ -148,15 +150,51 @@ body
 {
     border-style: none;
     background-color: transparent;
-    color: rgb(31, 5, 125);
-    text-shadow: 0px 0px 1px rgb(31, 5, 125);
+    color: var(--over-gradient-text-color);
+    text-shadow: 0px 0px 1px var(--over-gradient-text-color);
     font-size: 18px;
     margin-left: 1em;
 }
 
 .top_bar_button:hover
 {
-    text-shadow: 0px 0px 1px rgb(31, 5, 125), 0px 0px 15px rgb(60, 117, 181);
+    text-shadow: 0px 0px 1px var(--over-gradient-text-color), 0px 0px 15px var(--top-bar-button-hover-highlight);
+}
+
+input[type="checkbox"]
+{
+    appearance: none;
+    cursor: pointer;
+    background: var(--checkbox-bg);
+    background: var(--checkbox-gradient-bg);
+    width: 1em;
+    height: 1em;
+    border-radius: 5px;
+    border: 1px solid white;
+    box-shadow: 0px 0px 1px black;
+}
+
+input[type="checkbox"]:checked
+{
+    background-size: cover;
+    padding: 2px;
+    
+    background-image: var(--checkbox-checked-gradient-image-bg);
+}
+
+#darkmode_checkbox
+{
+    margin-left: 1em;
+}
+
+#darkmode_label
+{
+    border-style: none;
+    background-color: transparent;
+    color: var(--over-gradient-text-color);
+    text-shadow: 0px 0px 1px var(--over-gradient-text-color);
+    font-size: 18px;
+    margin-left: 5px;
 }
 
 #article_row_container
@@ -188,8 +226,8 @@ body
 #text_copied_container
 {
     position: absolute;
-    background: #d6d6d6;
-    background: linear-gradient(180deg,rgba(214, 214, 214, 1) 44%, rgba(166, 166, 166, 1) 57%);
+    background: var(--text-copied-bg);
+    background: var(--text-copied-gradient-bg);
     border: 1px solid gray;
     box-shadow: 0px 0px 4px black;
     
@@ -205,13 +243,13 @@ body
     border-radius: 3px;
     cursor: pointer;
     
-    background: #f2fcff;
-    background: linear-gradient(180deg,rgba(242, 252, 255, 1) 46%, rgba(220, 234, 242, 1) 65%);
+    background: var(--common-fallback-bg);
+    background: var(--common-gradient-bg);
 }
 
 .copyable_text:hover
 {
-    background: #fff8e0;
-    background: linear-gradient(180deg,rgba(255, 248, 224, 1) 45%, rgba(255, 234, 97, 1) 65%);
+    background: var(--copyable-text-bg);
+    background: var(--copyable-text-gradient-bg);
     cursor: pointer;
 }

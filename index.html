@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link id="style_colors" rel="stylesheet" href="colors_light.css">
     <link rel="stylesheet" href="index.css">
     <link rel="icon" href="vista_netcenter.ico" type="image/x-icon">
 </head>
@@ -27,6 +28,8 @@
                     <button class="top_bar_button" onclick="on_blog_clicked()">
                     Blog
                     </button>
+                    <input type="checkbox" name="darkmode_checkbox" id="darkmode_checkbox" onchange="on_toggle_darkmode(event, this)"/>
+                    <label for="darkmode_checkbox" id="darkmode_label">Darkmode</label><br>
                 </div>
                 <div id="content_target">
                 </div>

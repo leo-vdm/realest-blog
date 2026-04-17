@@ -28,6 +28,8 @@ var window_drag = {
     last_y : 0
 };
 
+var style_colors = null;
+
 var content_area_border = null;
 var top_bar = null;
 var content_target = null;
@@ -308,8 +310,25 @@ function on_window_touch_start(event)
     window_drag.last_y =event.targetTouches[0].pageY;
 }
 
+function set_style_color_source(url)
+{
+    style_colors.href = url;
+}
+
+function on_toggle_darkmode(e, target)
+{
+    let is_checked = target.checked;
+    
+    let light_color_sheet = "colors_light.css";
+    let dark_color_sheet = "colors_dark.css";
+
+    set_style_color_source(is_checked ? dark_color_sheet : light_color_sheet);
+}
+
 function main()
 {
+    style_colors = document.getElementById('style_colors');
+    
     content_area_border = document.getElementById('content_area_border');
     
     window_bounds.dim.x = content_area_border.offsetWidth; 
