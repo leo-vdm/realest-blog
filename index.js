@@ -246,22 +246,19 @@ async function on_copyable_text_clicked(source, event)
 
     try {
         await navigator.clipboard.writeText(source.textContent);
-        new_copied_text_popup(event.screenX, event.screenY);
+        new_copied_text_popup(event.x, event.y);
     }
     catch(err) {
         console.error('Failed to copy text to clipboard: ' + source.textContent);
     }
 }
 
-async function on_window_dragged(event)
+function update_window_pos(delta_x, delta_y, threshold)
 {
-    let delta_x = event.pageX - window_drag.last_x;
-    let delta_y = event.pageY - window_drag.last_y;
-    
     let abs_movement = Math.abs(delta_x) + Math.abs(delta_y);
     
     // If there was no movement or the movement is suspicously larger then just skip
-    if(abs_movement == 0 || abs_movement > 30)
+    if(abs_movement == 0 || abs_movement > threshold)
     {
         return;
     }
@@ -273,17 +270,43 @@ async function on_window_dragged(event)
     // Set the position of the window
     content_area_border.style.setProperty('left', window_bounds.pos.x+'px');
     content_area_border.style.setProperty('top', window_bounds.pos.y+'px');
+}
+
+async function on_window_dragged(event)
+{
+    let delta_x = event.pageX - window_drag.last_x;
+    let delta_y = event.pageY - window_drag.last_y;
+    
+    update_window_pos(delta_x, delta_y, 30);
+    
+    window_drag.last_x = event.pageX;
+    window_drag.last_y = event.pageY;
+}
+
+async function on_window_moved(event)
+{
+    let delta_x = event.targetTouches[0].pageX - window_drag.last_x;
+    let delta_y = event.targetTouches[0].pageY - window_drag.last_y;
+    
+    update_window_pos(delta_x, delta_y, 800);
+    
+    window_drag.last_x = event.targetTouches[0].pageX;
+    window_drag.last_y = event.targetTouches[0].pageY;
+}
+
+function on_window_drag_start(event)
+{
+    console.log(event);
+    event.dataTransfer.setDragImage(hidden_drag_ghost, 0, 0);
 
     window_drag.last_x = event.pageX;
     window_drag.last_y = event.pageY;
 }
 
-function on_window_drag_start(event)
+function on_window_touch_start(event)
 {
-    event.dataTransfer.setDragImage(hidden_drag_ghost, 0, 0);
-
-    window_drag.last_x = event.pageX;
-    window_drag.last_y = event.pageY;
+    window_drag.last_x = event.targetTouches[0].pageX;
+    window_drag.last_y =event.targetTouches[0].pageY;
 }
 
 function main()
@@ -305,7 +328,10 @@ function main()
     hidden_drag_ghost = document.getElementById('hidden_drag_ghost');
     window_dragbar = document.getElementById('window_dragbar');
     // Attatch extra dragging related listeners
-    window_dragbar.addEventListener('dragstart', on_window_drag_start)
+    window_dragbar.addEventListener('dragstart', on_window_drag_start);
+    window_dragbar.addEventListener('touchstart', on_window_touch_start);
+    
+    window_dragbar.addEventListener('touchmove', on_window_moved);
     
     window_icon = document.getElementById('window_icon');
     
