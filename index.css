@@ -15,24 +15,44 @@ body
 
 #content_root
 {
-    background-image: url('bg.jpg');
-    background-size: cover;
+    background-image: url('bg.jpg'), url('bg_low.jpg');
+    background-size: cover, cover;
     width: 100vw;
     height: 100vh;
     touch-action: none;
 }
 
+/* Sizing info, for mobile we want to fill the screen rather than starting with margins on the sides */
+@media (pointer:none), (pointer:coarse)
+{
+    #content_area_border
+    {
+        width: calc(100% - 20px);
+        padding: 50px 10px 0px 10px;
+        
+        position: relative;
+        top: 0px;
+        left: 0px;
+        height: calc(100% - 50px);   
+    }
+}
+@media (pointer: fine)
+{
+    #content_area_border
+    {
+        width: calc(100% - 200px);
+        padding: 60px 30px 10px 30px;
+        
+        position: relative;
+        top: 70px;
+        left: 70px;
+        height: calc(100% - 140px);   
+    }
+}
+
 /* Semi blurred transparent look akin to Win7 */
 #content_area_border
 {
-    width: calc(100% - 200px);
-    padding: 60px 30px 10px 30px;
-    
-    position: relative;
-    top: 70px;
-    left: 70px;
-    height: calc(100% - 140px);
-    
     background-color: #a7e1f84f;
     border-radius: 10px 10px 0px 0px;
     backdrop-filter: blur(7px);

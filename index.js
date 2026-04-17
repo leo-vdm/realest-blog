@@ -296,7 +296,6 @@ async function on_window_moved(event)
 
 function on_window_drag_start(event)
 {
-    console.log(event);
     event.dataTransfer.setDragImage(hidden_drag_ghost, 0, 0);
 
     window_drag.last_x = event.pageX;
