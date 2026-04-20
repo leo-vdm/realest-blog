@@ -29,6 +29,7 @@ var window_drag = {
 };
 
 var style_colors = null;
+var darkmode_checkbox = null;
 
 var content_area_border = null;
 var top_bar = null;
@@ -307,7 +308,7 @@ function on_window_drag_start(event)
 function on_window_touch_start(event)
 {
     window_drag.last_x = event.targetTouches[0].pageX;
-    window_drag.last_y =event.targetTouches[0].pageY;
+    window_drag.last_y = event.targetTouches[0].pageY;
 }
 
 function set_style_color_source(url)
@@ -315,9 +316,21 @@ function set_style_color_source(url)
     style_colors.href = url;
 }
 
+function set_is_dark_mode_active(bool_val)
+{
+    localStorage.setItem("dark_mode", bool_val ? "y" : "n");
+}
+
+function is_dark_mode_active()
+{
+    return localStorage.getItem("dark_mode") === "y";
+}
+
 function on_toggle_darkmode(e, target)
 {
     let is_checked = target.checked;
+    
+    set_is_dark_mode_active(is_checked);
     
     let light_color_sheet = "colors_light.css";
     let dark_color_sheet = "colors_dark.css";
@@ -328,6 +341,12 @@ function on_toggle_darkmode(e, target)
 function main()
 {
     style_colors = document.getElementById('style_colors');
+    
+    darkmode_checkbox = document.getElementById('darkmode_checkbox');
+    // Restore the state of the darkmode toggle from last session
+    darkmode_checkbox.checked = is_dark_mode_active();
+    // Set the stylesheet to reflect the value of our darkmode toggle.
+    on_toggle_darkmode(null, darkmode_checkbox);
     
     content_area_border = document.getElementById('content_area_border');
     
@@ -369,7 +388,7 @@ function main()
         return;
     }
     
-    // We werent on an articles so check which page we were on
+    // We werent on an article so check which page we were on
     const page_id = params.get('p');
     if(page_id != null && page_id != "")
     {
