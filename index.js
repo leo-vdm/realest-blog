@@ -69,12 +69,9 @@ function run_dynamic_script(url, target)
 {
     target.src = url;
     
-    if(script_main == null)
-    {
-        return;
-    }
-    
-    script_main();
+    target.onload = function () {
+        script_main();    
+    };
 }
 
 async function load_article_description(url, target)
@@ -121,6 +118,7 @@ function Article(path, name)
 
     // Load our content snippet
     load_content_snippet("articles/" + path + "/content.html", content_target);
+    run_dynamic_script("articles/" + path + "/script.js", dynamic_script);
 }
 
 // Create a new article row by cloning the template
@@ -136,7 +134,7 @@ function new_article_row(path, name)
     title_el.innerText = name;
 
     let thumbnail_el = created.getElementById("article_row_image");
-    thumbnail_el.src = "articles/" + path + "/thumbnail.jpg";
+    thumbnail_el.src = "articles/" + path + "/thumbnail.png";
 
     // Fetch the description for this row asynchronously
     let description_el = created.getElementById("article_row_description");

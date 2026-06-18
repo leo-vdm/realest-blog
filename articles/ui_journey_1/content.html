@@ -26,6 +26,13 @@
         list-style: none;
     }
     
+    #gist_container
+    {
+        width: auto;
+        height: auto;
+        font-size: 13pt;
+    }
+    
     /* Note(Leo): Page isnt really readable at full width so we limit it. */
     :root
     {
@@ -203,7 +210,7 @@ The more important issue is the one of API. In my opinion, IMGUI hasnt reached t
 advantage of this trick you can do with a for loop in C++, instead the API always forces the user to do PushDiv to open an element and PopDiv to close it (thats just an example, the
 actual names are different). See below for a code snippet example (if the gist isnt working click <a href="/articles/ui_journey_1/example.cpp" target="_blank">here</a>):
 </p>
-<script src="https://gist.github.com/leo-vdm/4a66e28af5a597802f88c1c26e96f2ce.js"></script>
+<div id="gist_container"></div>
 <p class="article_paragraph">
 Another thing is that IMGUI doesnt come with a platform layer, it is written to be agnostic so that you can integrate it yourself into whatever platform you happen to be working on.
 This isnt a criticism, just a design choice that I would like to make differently. LGUI will come with a set of platform layers and renderers, the user will not be responsible for writing them. 
