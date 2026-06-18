@@ -1,3 +1,8 @@
+:root
+{
+    --page-width-desktop: calc(100% - 200px);
+}
+
 *
 {
     padding: 0px;
@@ -41,7 +46,7 @@ body
 {
     #content_area_border
     {
-        width: calc(100% - 200px);
+        width: var(--page-width-desktop);
         padding: 60px 30px 10px 30px;
         
         position: relative;

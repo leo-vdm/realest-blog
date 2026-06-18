@@ -1,0 +1,49 @@
+
+<!--
+// Note(Leo): This doesnt really fit here, make this a seperate blog post as a technical breakdown
+<p class="article_paragraph">
+I had never written a compiler before but I knew that it would not be super performance critical so that is where I started. To build knowledge around the subject I
+watched a youtube series of someone implementing a small compiler in Node js. I followed along in python to begin with since I was quite comfortable with it.
+Once I had sufficiently modified the lexer and parser to work on a Markup style language I translated it over to C++.
+With that working I moved on to the style language, which needed its own lexer and parser. It was mostly a CSS ripoff, just without any of the modern fancy CSS features.
+Finally I made the metaprogram that would parse out the bindings. This was quite important for achieving that Svelte like feel, but much more difficult in a language like
+C++ where there arent any builtin events like there are in JS.
+</p>
+<p class="article_paragraph">
+Next, I moved on to the runtime. To start with I consumed all the content I could find online about how Chrome does its rendering, including reading through their
+source code (not that that really helped because its a mess). 
+For rendering I knew that I wanted to use the GPU so I chose to use the Vulkan API for the renderer. I settled on a compute shader based rendering approach where
+I used signed distance fields to represent element shapes. This approach had some performance issues but I decided to stick with it for the time being.
+At this point it had been several months since I started development and I had done some more research into the immediate mode UI paradigm, and seeing other's 
+opinions on retained vs immediate mode made me doubtfull of my choice to go with the retained mode DOM style API.  
+</p>
+<p class="article_paragraph">
+Nevertheless I decided to keep pushing through to atleast get an MVP, eventually finishing the runtime with the features I wanted. I had managed to mostly recreate the inline
+if statements that Svelte has and also their inline for loops. The runtime was essentially structured as a large pool of element objects that was retained accross frames, with 
+elements holding a pointer to their parent, next sibling and first child as a type of linked list/tree.
+Upon initializing a page we would load the compiled page file and hydrate out the elements into the DOM. Once we had done that we would begin sending tick events to a special
+method in the page object that the user would implement. After that method returned we would then do all the "automatic" ticking, which is to say we would walk the element
+tree and at every element we would check for any bindings. If we found any we would evaluate them and potentially call back the user at whatever methods they had registered
+for the particular element. The code binding our runtime together with the user's page object would be automatically generated at compile time by our metaprogram.  
+</p>
+<p class="article_paragraph">
+Once we had finished ticking all elements in the element tree we would then start our shaping process. This is the component that I am most proud of because I feel
+it was very powerfull for how many lines of code it took. When designing it I had done some research into how Chrome does flexbox (to no avail) but then I found the Clay
+project by Nick Barker. Clay is a C-layout tool that does UI layouts akin to how flexbox and other CSS layout types work. I watched a podcast interview that Nick had done
+about Clay and also had look around the source code for inspiration. I was very happy to see how simple his implementation was and how easy it was to read.   
+</p>
+<p class="article_paragraph">
+Having taken inspiration from Clay I made a three-pass system for my shaping process. On the first pass we navigate down the element tree and carry down any immediately known
+measurements. We also run text shaping which just tells us how big any text elements want to be. On the second pass we navigate up the element tree from the leaves, bringing up
+any calculated size so that the parent elements can know the size of their collection of children. On the final pass we navigate back down and calculate final sizes as well as
+doing culling. Essentially, if a child element is not within the visible bounds of its parent we can cull it.
+</p>
+<p class="article_paragraph">
+Shaping data was carried untill the next frame, this because the shaped elements contained data about which section of the element were visible on screen. That
+served as the building block for the click/hover interaction system. Finally, to render we would take the shaped element tree and walk it, turning each element into a 
+rendering primitive of some sort. For divs this would mean making them into their SDF representation. For images it meant splitting them into tiles and calculating sampling
+coordinates in the image buffer. This renderqueue could then be hashed and compared to the hash from last frame to see if anything changed, allowing us to skip re-rendering
+if nothing had indeed changed.
+</p>
+<h1 class="section_heading">Rememberer - The first RCM application</h1>
+-->

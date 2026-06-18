@@ -1,0 +1,238 @@
+<style>
+    .article_paragraph
+    {
+        font-size: 13pt;
+        margin-bottom: 10px;
+        max-width: 70em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section_heading
+    {
+        font-size: 18pt;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .list
+    {
+        font-size: 13pt;
+        margin-bottom: 10px;
+        max-width: 70em;
+        margin-left: auto;
+        margin-right: auto;
+        list-style: none;
+    }
+    
+    /* Note(Leo): Page isnt really readable at full width so we limit it. */
+    :root
+    {
+        --page-width-desktop: 80em;
+    }
+</style>
+<h1 class="section_heading">Beginnings</h1>
+<p class="article_paragraph">
+    One of my first programming languages I seriously tried to learn was C#.
+    There was a lot of good learning material about it but something about just seeing console output eventually became boring. 
+    Also of note is the fact that showing console output to non-programmers will just never get the real "Wow" response you want, you need something more colorfull.
+    Natuarally then I looked for how you would go about doing something like a user interface using the language I had been learning.
+    Unfortunately, C# being C# the main results were for Microsoft WPF, which I then decided to try out.
+    This was my first real experience making things appear on the screen and it felt impressive, even though my own contribution was quite small.  
+</p>
+<p class="article_paragraph">
+The reason I say that this was unfortunate is because it poisoned the way I thought about UI's, both in how they should be architected and what the syntax should be.
+The first signs of "Oh wait this cant be right" came when I started looking into more complex "styling" where I quickly saw how the Microsoft (TM) "everything is XML" 
+styling API collapsed into a horiffic unreadable mess that had to be segregated into style "libraries". These, in classic OOP fashion, were nothing more than hiding
+places designed to sweep the messy API under the rug. After the spiritual experience of trying to change the color of a scrollbar I decided that WPF was a mess, but
+I still did not reject the fundamental building blocks which caused it to be a mess; in my mind at the time I just put it up to Microsoft being incompetent and unable
+to execute a simple design effectively.
+</p>
+<h1 class="section_heading">Web</h1>
+<p class="article_paragraph">
+Around this time I was learning HTML in school and it appeared that the web people had at least done a better job at their idea of how elements had styles applied than
+WPF had. After watching some web content I started learning about all the different "frameworks" people used for "serious" web projects. The opinion at the time was 
+strongly against React (and its sibling frameworks), eventually I found Svelte which looked quite pleasant. I especially liked the way that it broke the rules that 
+I had seen in WPF, those being things like MVVM, which for those who dont know is Model, View, View Model architecture. It essentially entails declaring your UI elements
+in a seperate place and at a differnet time from where your code which loads data and handles user interactions lives. I found this model of doing things to be bad
+because it diffuses the functionality of your program accross many different places, meaning that to trace what an interaction does you need to jump around many different
+files and keep all of that context in your head. To compound the issue, WPF was all about doing different "bindings" to variables, which inevetably became a massive mess
+as you try to go back and forth between the usage and modification sites of a particular variable to see why something has broken. MVVM also makes for a very "rigid" UI,
+this because you have seperated your decleration of the UI from the code that does interactions, so that the implicit expectation then is that there will be minimal change
+in that UI during runtime. The result is that you are forced into seperating every small thing that wants to change during runtime into a seperate component file, further
+dispersing the behaviour of your program through an ever increasing sea of files.
+</p>
+<p class="article_paragraph">
+Svelte on the other hand grouped your styling, Javascript and elements all together, in one file. I feel like it was very influential in the development of my taste in UI APIs.
+Another great thing that Svelte did was their in-lined if statements, using these was the moment I realised just how bad the MVVM model had made WPF to use.
+</p>
+<img src="/articles/ui_journey_1/svelte_snippet.png"/>
+<p class="article_paragraph">
+The simplicity of it was amazing, it opens up so much runtime flexibility and makes for much more readable code.
+Soon, I was in my first year of University. I had managed to get a scholarship based on a programming test which then allowed me to skip ahead to second year computer science
+papers in place of the first year ones. This is relevant because one of the second year CS papers is the Smoke and Mirrors project, where you work in teams of four or five students
+to build a software project over the course of the semester. The project is essentially just a short brief, from which the team then plans and builds their software.
+</p>
+<p class="article_paragraph">
+Our team got the brief of building "The Ultimate Video Player" which essentially would be a video player where all the best features that you have in different video 
+players would be combined to give the greatest possible user experience. After brainstorming a list of features the question then came up about tech stack. This being 2023,
+none of us REALLY knew anything about native programming so we immediately decided that our product would be some kind of web client. This was also basically needed because
+part of our idea was that a video player should always make your media available to you so a web hosted client made sense. I of course immediately suggested the idea of 
+using Svelte, which is ultimately what we decided on because the only other proposed idea was just hosting raw HTML/CSS/JS.
+</p>
+<p class="article_paragraph">
+By the end of the project we had a pretty solid product, we had achieved all the features we set out to and had made a sleek video player. This with only two of us 
+really doing any work, the others only worked on the backend which didnt really have much code. I was very happy with Svelte at the completion of the project and looking back
+I still really like it.
+</p>
+<h1 class="section_heading">Becoming a luddite</h1>
+<p class="article_paragraph">
+Positive experience aside, there were still some things that really rubbed me the wrong way during our project to do with the web. In particular, I had had several extremely
+frustrating debugging sessions trying to work with the video player element. There were several times that I found myself thinking "just get out of my way and let me write the
+simple thing that does the thing I want" but of course that isnt really possible in web land, the browser and by extension the DOM are shrouded behind a very limited high level
+API. This really annoyed me and I ended up going back through some of my old C# code, here I found myself totally confused by what the hell was going on. I had written
+my code in the suggested style which was very OOP heavy. One codebase in particular was a RESTful HTTP api written using Microsoft ASP.net. This used reflection and 
+FactoryInterfaceFactoryBuilderAPI type code everywhere and it just dawned on me how unreadable and overcomplicated the whole thing was.
+</p>
+<p class="article_paragraph">
+I had long wanted to get into systems languages but seeing this mess was the final push that I needed. This coincided with discovering Casey Muratori's youtube series called 
+"Handmade Hero", a series showing programming a game (engine and all) from scratch in C++. He also had several videos around program structure and design outside of an OOP
+model which really resonated with me after my own experience with C#.
+</p>
+<p class="article_paragraph">
+So I really wanted to follow along with Handmade Hero but I also wanted to create something original. The idea then occurred to me that I could create my own UI library, since
+I didnt really have a good alternative idea for a game to make. 
+</p>
+<h1 class="section_heading">RCM - My (first) UI Library</h1>
+<p class="article_paragraph">
+Having never written C++ or any manually memory managed language before I of course decided that I would make the scope for my UI library as small as possible. I decided
+that I would make a markup based language, which would require writing a compiler, with a CSS ripoff and Svelte style inlining and vairable binding (which would require
+a metaprogram to generate code hooks).
+Basically the only reason I decided I would make the library be Markup based was the fact that Svelte seemed to show glimmers of hope for Markup based UIs.
+I wanted to prove (to myself I guess) that you COULD make a markup based UI library that was nice to use, consistent, efficient and simple.
+To be fair, Microsoft had totally butchered WPF with their MVVM obsession, so in the case of WPF you couldnt really disqaulify the Markup/XML API as being at fault.
+And in the case of web, you also cant really blame the Markup API, the web standard is made intentionally complex and lacking by Google (so no one can make a complete browser to compete with Chrome) 
+and Apple (so that the web is slow and programmers are forced to make native apps that go through their monopolised appstore).
+</p>
+<p class="article_paragraph">
+I had a long technical breakdown of RCM here but I've cut it out in favor of moving it to its own blog. I will instead just talk about what I learned after I eventually got RCM
+to an MVP state. After getting to MVP I decided to build an app to properly test out the ergonomics of the API. At this point it was several months after the start of development
+and I had looked into immediate mode paradigm libraries in the mean time. After getting my test app to a functional state I had had enough of the api and came to the conclusion
+that Markup really is just garbage (for making interactable apps). Imagine that, a format that was initially made for serving static documents doesnt work well as a UI api.  
+</p>
+<p class="article_paragraph">
+I also came to the conclusion that retained mode just sucked, really bad. The problem with it is that it starts from the assumption that there will be minimal state change, which
+is fundamentally untrue of anything we design in the year 2026. What ends up happening is that the user needs to go around playing janitor whenever they want to change
+some set of elements that form a widget. There is also an annoyance that comes from seperating the initialization code from the tick code, I.e. we take a different path
+when we first setup the elements to the path we take every other frame. The thing that then happens is that as the user you have to account for any number of possible combinations
+of widgets being or not being null on a given call to your tick function, you dont actually know which ones are there implicitly because the path that instantiated them
+occured in a different function at a different time entirely.
+</p>
+<p class="article_paragraph">
+The other extremely pervasive issue is the one of states. Bindings are supposed to be the bandaid fix to this, becuase they act as a way of letting the library
+poke its states into your variables. Bindings quickly become annoying because they force the user to hold a bunch of pointers and eventually youre just left asking
+"If all my state is here then why arent my UI declerations just here too", this is the locality issue. The fundamental assumption with retained mode UIs was that state and UI element 
+decleration could be seperated, instead we find that the state is essentially equivelant to the UI elements. Markup essentially forces the delceration of the element and the user 
+state to be in seperate sections. You could of course have the markup be inline in whatever language youre writing but that would require a carefully crafted compiler to seperate the two.
+Also, at that point it begs the question of why you are even using markup at all when the language you are writing the behaviour in already has calling conventions.
+</p>
+<p class="article_paragraph">
+This is all to say that the immediate mode people were correct. The state of the UI is the UI, so rather than bringing the state to the elements we should bring the elements to the state.
+That is the immediate mode UI paradigm and it is why I have moved away from RCM.
+</p>
+<h1 class="section_heading">Immediate Mode Revelations</h1>
+<p class="article_paragraph">
+This <a href="https://www.youtube.com/watch?v=Z1qyvQsjK5Y">video</a> by Casey Muratori was very informational on the structure of immediate mode UI's. The way he explains interactions
+just clicked for me. His idea was that there are only so many types of UI interactions that you might want happening at the same time, often this will be as few as one or two.
+The idea then is that rather than making evey elements store an interaction state you could have the UI library store the interaction state and the a cross frame ID of the element
+that was driving the interaction. This is really nice for a few reasons, first it prevents stale interaction states because the interactions are kept in a central location. 
+Secondly, it prevents duplicate interactions because it allows very simple "grabbing" of the user's inputs. For example if we have a dragging interaction that is ongoing we can prevent
+it being replaced by a clicking interaction, which will prevent elements that go under the mouse during dragging from receiving clicks. 
+</p>
+<p class="article_paragraph">
+As you can see, reduction of state being stored in the UI is probably the main focus point for making a good immediate mode library. When designing the API the focus points should be:
+</p>
+<ul class="list">
+<li>1. How can we avoid forcing the user to store UI state.</li>
+<li>2. How can we avoid implicitly storing state in the UI.</li>
+<li>3. How can we limit the lifetime of any state we do store.</li>
+<li>4. How can we structure the API to provide maximal garauantees to the user and minimize which checks the user is forced to do.</li>
+<li>5. How can we help the user to store state that only pertains to the UI in order to simplify their program. </li>
+</ul>
+<p class="article_paragraph">
+Point 1 pertains to things like "was this clicked last frame", which the user may want to know if they would like to do an animation from an unclicked state to a clicked state.
+If we are not carefull the user will be forced to make a place somewhere in their program that stores this, which is annoying and can make your UI less composable. A solution might
+be that in our API for checking a click we can say whether the click was ongoing or started this frame, something that is arbitrarily easy for the library to detect but drastically
+simplifies the user's experience.
+</p>
+<p class="article_paragraph">
+Point 2 pertains to things like storing a click interaction for every clickable element. We've already explained how we can reduce the stored state by only having a single interaction
+that is the "active" one. This is also more broadly applicable to any components we may make, for example a text box. Ideally we let the user hold the pointer to the text content rather
+than having them have a version of the text and the component has a version of the text that get copied back and forth.
+</p>
+<p class="article_paragraph">
+Point 3 is an important concession, we are conceding that some things really should be stored by the UI library because it is just the most convenient option. An example would be
+animations, why should the user be forced to find somewhere to shove an animation state when their program really doesnt care about them. The UI library should be responsible but
+then the question is how can we limit the lifetime? It is assumed we SHOULD limit the lifetime and this is because the alternative is to force the user to "free" the data once it 
+is not longer usefull otherwise a memory leak may occur, which is just going back to the same ugliness of retained mode. We can limit the lifetime by allowing the user to set a lifetime
+in frames for any data object we allow them to make in the UI system. This is great because we concentrate the responsibility around that piece of memory in a single place.
+</p>
+<p class="article_paragraph">
+Point 4 is a reinforcement of the normative immediate mode API, where the user can assume that whatever element they are declaring will always exist. This is mostly important in regards
+to any APIs we design which hold cross-frame state for the user. For example if we have an animation API, the user should just call Animation() and get a handle. They shouldnt be 
+required to, for example do a call like AnimationExists() and then write a branch to do CreateAnimation() or GetAnimation(). The Animation() call should, in the spirit of immediate mode,
+do the Exists() check implicitly and either return the existing animation or a newly created one to the user. This allows the user to collapse annoying, pointless branches.
+</p>
+<p class="article_paragraph">
+Point 5 is akin to point 3, we are conceding that in some situations the cleanest solution is to allow the user to store some data in the UI framework because the alternative would be
+that they would need to design a lot of their program around managing this data. When making an API for the user to store data we should still try and keep it in the immediate mode style
+so that we dont fall back into the retained mode ugliness of managing pointers and lifetimes. Like we observed, any data store API should not make the retained mode mistake of seperating
+the initialisation and tick code. Thus the API should be something like PushOrGetUserData() which then returns a pointer to the user. We should also take a "limited lifetime by default"
+approach, where we limit the lifetime of these datums to some number of frames. This saves the user from having to think about "What if I dont get to this part on the next frame to free
+the data".
+</p>
+<h1 class="section_heading">LGUI - My next UI framework</h1>
+<p class="article_paragraph">
+As you may be able to guess, my next UI framework I am working on is immediate mode. I have gathered inspiration from the very famous IMGUI immediate mode framework. LGUI sets
+out to solve some issues that IMGUI has and also serves as an oppurtunity for me to learn more about rendering and complex UI's. Firstly, IMGUI markets itself as a debug UI, which
+I frankly think is a marketing mistake. Of course, many people understand that it is pretty fully featured and use it in production anyways. 
+</p>
+<p class="article_paragraph">
+The more important issue is the one of API. In my opinion, IMGUI hasnt reached the maximum of how clean/user friendly an API can be in C++. One obvious example is that it doesnt take
+advantage of this trick you can do with a for loop in C++, instead the API always forces the user to do PushDiv to open an element and PopDiv to close it (thats just an example, the
+actual names are different). See below for a code snippet example (if the gist isnt working click <a href="/articles/ui_journey_1/example.cpp" target="_blank">here</a>):
+</p>
+<script src="https://gist.github.com/leo-vdm/4a66e28af5a597802f88c1c26e96f2ce.js"></script>
+<p class="article_paragraph">
+Another thing is that IMGUI doesnt come with a platform layer, it is written to be agnostic so that you can integrate it yourself into whatever platform you happen to be working on.
+This isnt a criticism, just a design choice that I would like to make differently. LGUI will come with a set of platform layers and renderers, the user will not be responsible for writing them. 
+The aim is to be a UI centric library, with support for user to integrate it into an existing rendering pipeline if they want to, rather than IMGUI which is the other way around.
+So the aim then is to be more like Qt, just with an immediate mode API rather than retained mode.
+</p>
+<p class="article_paragraph">
+Another thing that isnt great in most UI libraries is the autolayout, this is something that HTML actually does quite well (aside from obvious flaws due to historical holdovers).
+Clay proved that you can, with very little code, create a powerfull and fast autolayout API that feels good to use. I was pleased with the layout API in RCM so I think that there definitely
+is a place in immediate mode libraries for this kind of layout assistance. One thing though, I dont think that it should be the ONLY available layout method, or that manually layed out items
+should be difficult to do. This is where I failed in RCM because I replicated the same kind of ABSOLUTE position stuff the browser does. For an immediate mode library I believe it makes 
+far more sense for manual layout to be the default, and then users simply poke in sizing styles where they need to.
+</p>
+<p class="article_paragraph">
+A lesson I learned from RCM is that rendering isnt cheap, even on GPU. There is a kind of fixed cost to render a certain number of pixels, it is not the case as some might think that
+just because you only have a few thousand elements the cost will be trivial. This assumption comes from peoples experience of seeing that GPUs can render millions of triangles in a 3D scene
+at realtime framerates, but the scaling effect doesnt really come from the number of things being rendered. Rather, it is the number if pixels that imposes the majority of the cost. This
+means that a 1920x1080 UI is still going to be quite expensive to render. Users also will have the expectation that a pure UI app shouldnt use much in the way of resources, so if you are
+re-rendering at realtime framerates they will become frustrated that your app is using like 20% of the GPU. This is all to say I will be heavily focused on making a good partial re-rendering
+system for LGUI. Partial re-rendering can be really difficult, even browsers dont seem to do a very good job at it, so I think it will really be a good learning experience and will set the
+library apart.
+</p>
+<p class="article_paragraph">
+The final thing is that I would like a good animation API. In many frameworks animations seem like an afterthought and I would like them to be first class in LGUI.
+</p>
+<h1 class="section_heading">Final word</h1>
+<p class="article_paragraph">
+I've already started development of LGUI. I am leaning on my experience with RCM to try and better manage my work effort, doing a more focused approach where I intend to get all the basic systems
+implemented in a mininal way before trying to really flesh them out. As-is I will not be doing a GPU renderer untill later, initially I will do a CPU renderer (which is much simpler)
+so that I can focus on structuring the primitives efficiently and get the partial re-renderer working. I've got the codebase private at the moment, I will probably write another post around
+the arguments for moving to closed source, along with a guide for setting up private version control.
+</p>

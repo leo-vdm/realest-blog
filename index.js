@@ -14,7 +14,7 @@ file names).
 const CONTENT_INDEX = {
     "Content" :
     [
-        { name : "Coming Soon!", url: "ui_journey_1"},
+        { name : "My UI journey so far", url: "ui_journey_1"},
     ]
 };
 
