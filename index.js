@@ -14,8 +14,8 @@ file names).
 const CONTENT_INDEX = {
     "Content" :
     [
-        { name : "My UI journey so far", url: "ui_journey_1"},
-    ]
+     { name : "My UI journey so far", url: "ui_journey_1"},
+     ]
 };
 
 var window_bounds = {
@@ -43,55 +43,54 @@ var window_icon = null;
 var article_row_template = null;
 var text_copied_template = null;
 
-var dynamic_script = null;
-
 function load_content_snippet(url, target)
 {
-  fetch(url)
-    .then(response => {
-      if (!response.ok)
-      {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      
-      return response.text();
-    })
-    .then(html =>
-    {
-      target.innerHTML = html;
-    })
-    .catch(error => {
-      console.error('Error loading HTML:', error);
-    });
+    return fetch(url)
+        .then(response => {
+                  if (!response.ok)
+                  {
+                      throw new Error(`HTTP error! Status: ${response.status}`);
+                  }
+                  
+                  return response.text();
+              })
+        .then(html =>
+              {
+                  target.innerHTML = html;
+              })
+        .catch(error => {
+                   console.error('Error loading HTML:', error);
+               });
 }
 
-function run_dynamic_script(url, target)
+function run_dynamic_script(url)
 {
-    target.src = url;
-    
-    target.onload = function () {
-        script_main();    
-    };
+    import('./' + url)
+        .then(module =>
+              {
+                  module.script_main();
+              })
+        .catch(err => console.error('Module load error', err));
 }
 
 async function load_article_description(url, target)
 {
     fetch(url)
-    .then(response => {
-      if (!response.ok)
-      {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      
-      return response.text();
-    })
-    .then(txt =>
-    {
-      target.innerText = txt;
-    })
-    .catch(error => {
-      console.error('Error loading article description:', error);
-    });
+        .then(response => {
+                  if (!response.ok)
+                  {
+                      throw new Error(`HTTP error! Status: ${response.status}`);
+                  }
+                  
+                  return response.text();
+              })
+        .then(txt =>
+              {
+                  target.innerText = txt;
+              })
+        .catch(error => {
+                   console.error('Error loading article description:', error);
+               });
 }
 
 // Note(Leo): Idiotic search
@@ -113,12 +112,11 @@ function get_article_name_from_url(path)
 function Article(path, name)
 {
     // Switch the window title and icon. We use the notepad icon for articles.
-    window_icon.src = "notepad.ico"
-    window_title.innerText = `C:\\Blog\\${name}.txt - Notepad`
-
+    window_icon.src = "notepad.ico";
+    window_title.innerText = `C:\\Blog\\${name}.txt - Notepad`;
+    
     // Load our content snippet
-    load_content_snippet("articles/" + path + "/content.html", content_target);
-    run_dynamic_script("articles/" + path + "/script.js", dynamic_script);
+    load_content_snippet("articles/" + path + "/content.html", content_target).then( res => { run_dynamic_script("articles/" + path + "/script.js") });
 }
 
 // Create a new article row by cloning the template
@@ -132,10 +130,10 @@ function new_article_row(path, name)
     
     let title_el = created.getElementById("article_row_title");
     title_el.innerText = name;
-
+    
     let thumbnail_el = created.getElementById("article_row_image");
     thumbnail_el.src = "articles/" + path + "/thumbnail.png";
-
+    
     // Fetch the description for this row asynchronously
     let description_el = created.getElementById("article_row_description");
     load_article_description("articles/" + path + "/preview.txt", description_el);
@@ -148,13 +146,13 @@ function BlogPage()
 {
     // Switch the window title and icon. We use the file explorer icon for the home page.
     window_icon.src = "explorer.ico"
-    window_title.innerText = "C:\\Blog - File Explorer"
- 
-    content_target.innerHTML = "";
+        window_title.innerText = "C:\\Blog - File Explorer"
+        
+        content_target.innerHTML = "";
     
     
     const content_array = CONTENT_INDEX.Content;
-
+    
     for(let i = 0; i < content_array.length; i++)
     {
         let item = content_array[i];
@@ -166,13 +164,13 @@ function HomePage()
 {
     // Switch the window title and icon. We use the file explorer icon for the home page.
     window_icon.src = "explorer.ico"
-    window_title.innerText = "C:\\Home - File Explorer"
- 
-    content_target.innerHTML = "";
-
+        window_title.innerText = "C:\\Home - File Explorer"
+        
+        content_target.innerHTML = "";
+    
     // Load our content snippet
     load_content_snippet("pages/home/content.html", content_target);
-    run_dynamic_script("pages/home/script.js", dynamic_script);
+    run_dynamic_script("pages/home/script.js");
 }
 
 // Add the article path to the current URL without reloading
@@ -244,7 +242,7 @@ async function on_copyable_text_clicked(source, event)
     {
         return;
     }
-
+    
     try {
         await navigator.clipboard.writeText(source.textContent);
         new_copied_text_popup(event.x, event.y);
@@ -298,7 +296,7 @@ async function on_window_moved(event)
 function on_window_drag_start(event)
 {
     event.dataTransfer.setDragImage(hidden_drag_ghost, 0, 0);
-
+    
     window_drag.last_x = event.pageX;
     window_drag.last_y = event.pageY;
 }
@@ -332,7 +330,7 @@ function on_toggle_darkmode(e, target)
     
     let light_color_sheet = "colors_light.css";
     let dark_color_sheet = "colors_dark.css";
-
+    
     set_style_color_source(is_checked ? dark_color_sheet : light_color_sheet);
 }
 

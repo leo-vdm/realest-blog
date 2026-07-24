@@ -1,6 +1,4 @@
-function script_main()
+export function script_main()
 {
     console.log("Maine");
 }
-
-script_main();
